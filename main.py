@@ -20,6 +20,16 @@ def parseRepo(data, name):
     return [x for x in data if x["name"] == name]
 
 
+def parseCommits(data):
+    # dates = [elem["commit"]["date"] for elem in data]
+    # print(dates)
+    commitData = []
+
+
+
+
+
+
 if __name__ == "__main__":
     uresponseAPI = requests.get('https://api.github.com/users/'+userIOQuery())
     #print(responseAPI.status_code)
@@ -34,8 +44,9 @@ if __name__ == "__main__":
             rdataRaw = rresponseAPI.text
             rdataJS = json.loads(rdataRaw)
             # print(json.dumps(rdataJS, sort_keys=True, indent=4))
-            print(json.dumps(parseRepo(rdataJS, repoIOQuery()), sort_keys=True, indent=4))
-
+            repoData = parseRepo(rdataJS, repoIOQuery())
+            print(json.dumps(repoData, sort_keys=True, indent=4))
+            parseCommits(repoData)
 
 
 
