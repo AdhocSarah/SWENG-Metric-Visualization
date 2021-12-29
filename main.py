@@ -1,4 +1,3 @@
-
 import requests
 import json
 import matplotlib.pyplot as plt
@@ -10,44 +9,60 @@ def userIOQuery():
     username = "adhocsarah"
     return username
 
+
 def repoIOQuery():
     # Todo: add user interactivity - ask for repo info
     # print("Please input a valid github repo.")
     reponame = "SWENG-Metric-Visualization"
     return reponame
 
+
 def parseRepo(data, name):
-    return [x for x in data if x["name"] == name]
+    for elem in data:
+        if elem.get("name") == name:
+            return elem
 
 
 def parseCommits(data):
-    # dates = [elem["commit"]["date"] for elem in data]
-    # print(dates)
-    commitData = []
+    datedict = {}
+    for elem in data:
+        # print(elem["commit"])
+        shortdate = elem["commit"]["author"]["date"].split('T')[0]
+        if shortdate in datedict.keys():
+            datedict[shortdate] += 1
+        else:
+            datedict[shortdate] = 1
+    #     print(shortdate)
+    # print(datedict)
+    return datedict
 
-
-
-
+def graph(data):
+    pass
 
 
 if __name__ == "__main__":
-    uresponseAPI = requests.get('https://api.github.com/users/'+userIOQuery())
-    #print(responseAPI.status_code)
+    uresponseAPI = requests.get('https://api.github.com/users/' + userIOQuery())
+    # print(responseAPI.status_code)
     if (uresponseAPI.status_code == 200):
         udataRaw = uresponseAPI.text
-        #print(udataRaw)
+        # print(udataRaw)
         udataJS = json.loads(udataRaw)
-        print("ID: " + str(udataJS['id']))
+        # print("ID: " + str(udataJS['id']))
         rresponseAPI = requests.get(udataJS['repos_url'])
         # print(rresponseAPI.status_code)
         if (rresponseAPI.status_code == 200):
             rdataRaw = rresponseAPI.text
             rdataJS = json.loads(rdataRaw)
             # print(json.dumps(rdataJS, sort_keys=True, indent=4))
-            repoData = parseRepo(rdataJS, repoIOQuery())
-            print(json.dumps(repoData, sort_keys=True, indent=4))
-            parseCommits(repoData)
-
+            repoData = (parseRepo(rdataJS, repoIOQuery()))
+            # print(repoData)
+            # print(repoData["commits_url"][:-6])
+            cresponseAPI = requests.get(repoData["commits_url"][:-6])
+            # print(cresponseAPI.text)
+            cdata = json.loads(cresponseAPI.text)
+            # print(json.dumps(cdata, indent=4))
+            dateData = parseCommits(cdata)
+            graph(dateData)
 
 
         else:
