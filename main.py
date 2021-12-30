@@ -36,8 +36,10 @@ def parseCommits(data):
     # print(datedict)
     return datedict
 
+
 def graph(data):
-    pass
+    plt.plot(data.keys(), [data[x] for x in data.keys()])
+    plt.show()
 
 
 if __name__ == "__main__":
