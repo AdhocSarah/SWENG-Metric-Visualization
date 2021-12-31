@@ -33,12 +33,14 @@ def parseCommits(data):
         else:
             datedict[shortdate] = 1
     #     print(shortdate)
-    # print(datedict)
+    print(datedict)
     return datedict
 
 
 def graph(data):
-    plt.plot(data.keys(), [data[x] for x in data.keys()])
+    xAxis = sorted(data.keys())
+
+    plt.plot(xAxis, [data[x] for x in xAxis])
     plt.show()
 
 
