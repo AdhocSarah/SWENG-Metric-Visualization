@@ -40,7 +40,10 @@ def parseCommits(data):
 def graph(data):
     xAxis = sorted(data.keys())
 
-    plt.plot(xAxis, [data[x] for x in xAxis])
+    plt.bar(xAxis, [data[x] for x in xAxis])
+    plt.xlabel("Dates")
+    plt.ylabel("Commits")
+    plt.title("Commits over Time")
     plt.show()
 
 
