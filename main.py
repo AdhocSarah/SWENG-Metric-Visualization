@@ -1,5 +1,4 @@
 import functools
-
 import requests
 import json
 import matplotlib.pyplot as plt
@@ -137,9 +136,10 @@ if __name__ == "__main__":
                     out += str(elem) + ", "
                     missingDates.add(elem)
                 out += str(dates[i + 1])
-                print(out)
+                # print(out)
             for elem in missingDates:
                 dateData[elem] = 0
+            print("Displaying graph.")
             graph(dateData, repoData["name"])
 
 
