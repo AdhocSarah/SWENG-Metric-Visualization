@@ -57,15 +57,12 @@ class simpledate:
 
 
 def user_io_query():
-    # Todo: add user interactivity - ask for user info
-    # username = "adhocsarah"
     username = input("Please input a valid github username.")
     return username
 
 
 def repo_io_query(repoList):
-    # Todo: add user interactivity - ask for repo info
-    # reponame = "SWENG-Metric-Visualization"
+
     repoNum = int(input("Please input a valid github repo."))
     return repoList[repoNum]
 
@@ -141,8 +138,8 @@ if __name__ == "__main__":
                     missingDates.add(elem)
                 out += str(dates[i + 1])
                 print(out)
-            # for elem in missingDates:
-            #     dateData[elem] = 0
+            for elem in missingDates:
+                dateData[elem] = 0
             graph(dateData, repoData["name"])
 
 
